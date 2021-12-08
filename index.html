@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+<table>
+  <tr id="0">
+    <td id="0"></td>
+    <td id="1"></td>
+    <td id="2"></td>
+  </tr>
+  <tr id="1">
+    <td id="0"></td>
+    <td id="1"></td>
+    <td id="2"></td>
+  </tr>
+  <tr id="2">
+    <td id="0"></td>
+    <td id="1"></td>
+    <td id="2"></td>
+  </tr>
+</table>
+<div class="endgame">
+  <div class="text"></div>
+</div>
+<button onClick="startGame()">Replay</button>
+<button id="nextBtn">Next</button>
+<button id="prevBtn">Prev</button>
+<!-- <button id="xBtn">X</button>
+<button id="oBtn">O</button> -->
+<input type="radio" id="xRadio" name="player" value="X">
+<label for="xRadio">X</label>
+<input type="radio" id="oRadio" name="player" value="O">
+<label for="oRadio">O</label>  
+<button id="startBtn">Start</button>
+<script type="module" src="game.js"></script>
+</body>
+</html>
