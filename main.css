@@ -15,6 +15,7 @@ table {
     left: 50%;
     margin-left: -155px;
     top: 25%;
+    background:rgba(205, 133, 63 ,0.8);
 }
 
 table tr:first-child td {

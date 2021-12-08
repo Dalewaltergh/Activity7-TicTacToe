@@ -22,7 +22,7 @@ let origBoard = [
 
 let moveCount
 let moveStates = []
-let huPlayer
+let huPlayer = 'O'
 const aiPlayer = 'X'
 const rows = document.querySelectorAll('tr')
 const cells = document.querySelectorAll('td')
@@ -57,7 +57,7 @@ function turnClick(e) {
   let rowId = e.target.parentNode.id
   let cellId = e.target.id
   turn(rowId, cellId, huPlayer)
-  huPlayer = huPlayer === 'X' ? 'O' : 'X'
+  // huPlayer = huPlayer === 'X' ? 'O' : 'X'
 }
 
 function turn(rowId, cellId, player) {
@@ -69,6 +69,10 @@ function turn(rowId, cellId, player) {
   moveStates.push(moveSave)
   console.log('Move States', moveStates)
 
+  if (emptySquares().length) {
+    bestMove()
+  }
+
   let boardFlat = origBoard.flat()
   let gameWon = checkWin(boardFlat, player)
 
@@ -77,7 +81,6 @@ function turn(rowId, cellId, player) {
     moveCount = moveStates.length -1
   } else if (!emptySquares().length) 
     console.log('Draw')
-
 }
 
 function checkWin(board, player) {  
@@ -86,7 +89,7 @@ function checkWin(board, player) {
       a.concat(i) :
       a, []
   )
-
+  
   let gameWon = null
   for (let [index, win] of winCombos.entries()) {
     if (win.every(elem => plays.indexOf(elem) > -1)) {
@@ -115,4 +118,74 @@ function updateState(e) {
       rows[rowIndex].children[boxIndex].textContent = boxData
     )
   )
+}
+
+function bestMove() {
+  let bestScore = -Infinity
+  let move
+  for (let i = 0; i < rows.length; i++) {
+    for (let j = 0; j < rows.length; j++) {
+      if (origBoard[i][j] === '') {
+        origBoard[i][j] = aiPlayer
+        console.log(origBoard)
+        let score = minimax(origBoard, 0, false)
+        origBoard[i][j] = ''
+        console.log(score)
+        if (score > bestScore) {
+          bestScore = score
+          move = { i, j }
+          console.log('Hi')
+        }
+      }
+    }
+  }
+  origBoard[move.i][move.j] = aiPlayer
+  rows[move.i].children[move.j].textContent = aiPlayer
+
+  console.log(origBoard)
+
+  // let moveSave = origBoard.map(arr => arr.slice())
+  // moveStates.push(moveSave)
+  // console.log('Move States', moveStates)
+}
+
+function minimax(board, depth, isMaximizing) {
+  let boardFlat = origBoard.flat()
+  let result = checkWin(boardFlat, aiPlayer)
+  
+  if (checkWin(boardFlat, huPlayer)) {
+    return -10
+  } else if (checkWin(boardFlat, aiPlayer)) {
+    return 10
+  } else if (emptySquares().length === 0) {
+    return 0
+  }
+
+  if (isMaximizing) {
+    let bestScore = -Infinity
+    for (let i = 0; i < rows.length; i++) {
+      for (let j = 0; j < rows.length; j++) {
+        if (origBoard[i][j] === '') {
+          origBoard[i][j] = aiPlayer
+          let score = minimax(origBoard, depth + 1, false)
+          origBoard[i][j] = ''
+          bestScore = Math.max(score, bestScore)
+        }
+      }
+    }
+    return bestScore
+  } else {
+    let bestScore = Infinity
+    for (let i = 0; i < rows.length; i++) {
+      for (let j = 0; j < rows.length; j++) {
+        if (origBoard[i][j] === '') {
+          origBoard[i][j] = huPlayer
+          let score = minimax(origBoard, depth + 1, true)
+          origBoard[i][j] = ''
+          bestScore = Math.min(score, bestScore)
+        }
+      }
+    }
+    return bestScore
+  }
 }
