@@ -1,3 +1,11 @@
+import {
+  rows,
+  cells, 
+  nextBtn, 
+  prevBtn,
+  startBtn,
+} from './domElements.js'
+
 const winCombos = [
   // Horizontal
   [0, 1, 2],
@@ -19,15 +27,9 @@ let moveCount
 let moveStates
 let huPlayer
 let aiPlayer
-
-const rows = document.querySelectorAll('tr')
-const cells = document.querySelectorAll('td')
-const prevBtn = document.getElementById('prevBtn')
-const nextBtn = document.getElementById('nextBtn')
-const startBtn = document.getElementById('startBtn')
+let againstAi
 
 startBtn.addEventListener('click', startGame)
-
 prevBtn.addEventListener('click', updateState)
 nextBtn.addEventListener('click', updateState)
 
@@ -42,8 +44,19 @@ function playerChoose() {
   aiPlayer = huPlayer === 'X' ? 'O' : 'X'
 }
 
+function gameTypeChoose() {
+  const gameType = document.querySelectorAll('input[name="gameType"]')
+  for (const type of gameType) {
+    if(type.checked) {
+      againstAi = (type.value === 'true')
+      break // or return(out of function)
+    }
+  }
+}
+
 function startGame() {
   playerChoose()
+  gameTypeChoose()
   cells.forEach(cell => {
     cell.textContent = ''
     cell.addEventListener('click', turnClick, { once: true })
@@ -60,33 +73,35 @@ function turnClick(e) {
   let rowId = e.target.parentNode.id
   let cellId = e.target.id
   turn(rowId, cellId, huPlayer)
-  // huPlayer = huPlayer === 'X' ? aiPlayer : huPlayer
 }
 
 function turn(rowId, cellId, player) {
   origBoard[rowId][cellId] = player
-
+  
   rows[rowId].children[cellId].textContent = player
-
+  
   let moveSave = origBoard.map(arr => arr.slice())
   moveStates.push(moveSave)
   console.log('Move States', moveStates)
-
-  if (emptySquares().length) {
-    bestMove()
-  }
-
+  
+  
   let boardFlat = origBoard.flat()
   let gameWon = checkWin(boardFlat, player)
-
+  
   if (gameWon) {
-    console.log('Player Wins')
+    console.log(`Player ${huPlayer} Wins`)
     moveCount = moveStates.length -1
     cells.forEach(cell => cell.removeEventListener('click', turnClick))
   } else if (!emptySquares().length) {
     console.log('Draw')
     moveCount = moveStates.length -1
   }
+
+  if (emptySquares().length && againstAi)
+    bestMove()
+  else 
+    huPlayer = huPlayer === 'X' ? 'O' : 'X'
+  
 }
 
 function checkWin(board, player) {  
@@ -99,7 +114,10 @@ function checkWin(board, player) {
   let gameWon = null
   for (let [index, win] of winCombos.entries()) {
     if (win.every(elem => plays.indexOf(elem) > -1)) {
-      gameWon = {index: index, player: player}
+      gameWon = {
+        index: index, 
+        player: player
+      }
       break
     }
   }
@@ -154,14 +172,14 @@ function bestMove() {
 
   let gameWon = checkWin(boardFlat, aiPlayer)
   if (gameWon) {
-    console.log('CPU Wins')
+    console.log(`CPU ${aiPlayer} Wins`)
     moveCount = moveStates.length -1
     cells.forEach(cell => cell.removeEventListener('click', turnClick))
   }
 }
 
 function minimax(board, depth, isMaximizing) {
-  let boardFlat = origBoard.flat()
+  let boardFlat = board.flat()
   let result = checkWin(boardFlat, aiPlayer)
   
   if (checkWin(boardFlat, huPlayer)) return -10
@@ -172,10 +190,10 @@ function minimax(board, depth, isMaximizing) {
     let bestScore = -Infinity
     for (let i = 0; i < rows.length; i++) {
       for (let j = 0; j < rows.length; j++) {
-        if (origBoard[i][j] === '') {
-          origBoard[i][j] = aiPlayer
-          let score = minimax(origBoard, depth + 1, false)
-          origBoard[i][j] = ''
+        if (board[i][j] === '') {
+          board[i][j] = aiPlayer
+          let score = minimax(board, depth + 1, false)
+          board[i][j] = ''
           bestScore = Math.max(score, bestScore)
         }
       }
@@ -185,10 +203,10 @@ function minimax(board, depth, isMaximizing) {
     let bestScore = Infinity
     for (let i = 0; i < rows.length; i++) {
       for (let j = 0; j < rows.length; j++) {
-        if (origBoard[i][j] === '') {
-          origBoard[i][j] = huPlayer
-          let score = minimax(origBoard, depth + 1, true)
-          origBoard[i][j] = ''
+        if (board[i][j] === '') {
+          board[i][j] = huPlayer
+          let score = minimax(board, depth + 1, true)
+          board[i][j] = ''
           bestScore = Math.min(score, bestScore)
         }
       }

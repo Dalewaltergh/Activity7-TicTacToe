@@ -1,0 +1,5 @@
+export const rows = document.querySelectorAll('tr')
+export const cells = document.querySelectorAll('td')
+export const nextBtn = document.getElementById('nextBtn')
+export const prevBtn = document.getElementById('prevBtn')
+export const startBtn = document.getElementById('startBtn')
