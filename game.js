@@ -58,9 +58,6 @@ function turnClick(e) {
   let cellId = e.target.id
   turn(rowId, cellId, huPlayer)
   huPlayer = huPlayer === 'X' ? 'O' : 'X'
-  
-  // if (!checkTie())
-  //   turn(bestSpot(), aiPlayer)
 }
 
 function turn(rowId, cellId, player) {
@@ -72,20 +69,19 @@ function turn(rowId, cellId, player) {
   moveStates.push(moveSave)
   console.log('Move States', moveStates)
 
-  let gameWon = checkWin(origBoard, player)
+  let boardFlat = origBoard.flat()
+  let gameWon = checkWin(boardFlat, player)
+
   if (gameWon) {
     console.log(player + ' Wins')
     moveCount = moveStates.length -1
-    //   gameOver(gameWon)
   } else if (!emptySquares().length) 
     console.log('Draw')
 
 }
 
-function checkWin(board, player) {
-  let boardFlat = board.flat()
-  
-  let plays = boardFlat.reduce((a, e, i) =>
+function checkWin(board, player) {  
+  let plays = board.reduce((a, e, i) =>
     e === player ?
       a.concat(i) :
       a, []
@@ -101,91 +97,10 @@ function checkWin(board, player) {
   return gameWon
 }
 
-// function gameOver(gameWon) {
-//   winCombos[gameWon.index].forEach(i =>
-//     document.getElementById(i).style.background =
-//       gameWon.player === huPlayer ? 'blue' : 'red'
-//   )
-//   cells.forEach(cell => cell.removeEventListener('click', turnClick))
-//   declareWinner(gameWon.player === huPlayer ? 'You Win!' : 'You Lose')
-// }
-//
-// function declareWinner(who) {
-//   document.querySelector('.endgame').style.display = 'block'
-//   document.querySelector('.endgame .text').textContent = who
-// }
-//
 function emptySquares() {
   let boardFlat = origBoard.flat()
   return boardFlat.filter(i => !i)
 }
-//
-// function bestSpot() {
-//   return minimax(origBoard, aiPlayer).index
-// }
-//
-// function checkTie() {
-//   if (!emptySquares().length) {
-//     cells.forEach(cell => {
-//       cell.style.background = 'green'
-//       cell.removeEventListener('click', turnClick)
-//     })
-//     // declareWinner('Tie Game')
-//     return true
-//   }
-//   return false
-// }
-//
-//
-// function minimax(newBoard, player) {
-//   let availSpots = emptySquares(newBoard)
-//
-//   if (checkWin(newBoard, huPlayer)) {
-//     return {score: -10}
-//   } else if (checkWin(newBoard, aiPlayer)) {
-//     return {score: 10}
-//   } else if (availSpots.length === 0) {
-//     return {score: 0}
-//   }
-//
-//   let moves = []
-//   for (let i = 0; i < availSpots.length; i++) {
-//     let move = {}
-//     move.index = newBoard[availSpots[i]]
-//     newBoard[availSpots[i]] = player
-//
-//     if (player === aiPlayer) {
-//       let result = minimax(newBoard, huPlayer)
-//       move.score = result.score
-//     } else {
-//       let result = minimax(newBoard, aiPlayer)
-//       move.score = result.score
-//     }
-//
-//     newBoard[availSpots[i]] = move.index
-//     moves.push(move)
-//   }
-//
-//   let bestMove
-//   if(player === aiPlayer) {
-//     let bestScore = -10000;
-//     for(let i = 0; i < moves.length; i++) {
-//       if (moves[i].score > bestScore) {
-//         bestScore = moves[i].score
-//         bestMove = i
-//       }
-//     }
-//   } else {
-//     let bestScore = 10000;
-//     for(let i = 0; i < moves.length; i++) {
-//       if (moves[i].score < bestScore) {
-//         bestScore = moves[i].score
-//         bestMove = i
-//       }
-//     }
-//   }
-//   return moves[bestMove]
-// }
 
 function updateState(e) {
   if (e.target.id === 'prevBtn')
