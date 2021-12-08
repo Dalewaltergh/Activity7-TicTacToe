@@ -38,31 +38,22 @@ startBtn.addEventListener('click', newGame)
 prevBtn.addEventListener('click', updateState)
 nextBtn.addEventListener('click', updateState)
 
-function turnClick(e) {
-  let rowId = e.target.parentNode.id
-  let cellId = e.target.id
-
-  origBoard[rowId][cellId] = nextPlayer
-  
-  rows[rowId].children[cellId].textContent = nextPlayer
-  
-  let moveSave = origBoard.map(arr => arr.slice())
+function saveMoveState() {
+  const moveSave = origBoard.map(arr => arr.slice())
   moveStates.push(moveSave)
-  console.log('Player Move States', moveStates)
-  
-  let boardFlat = origBoard.flat()
-  let gameWon = checkWinner(boardFlat, nextPlayer)
-  
-  if (gameWon) {
-    console.log(`Player ${nextPlayer} Wins`)
-    moveCount = moveStates.length -1
-    cells.forEach(cell => cell.removeEventListener('click', turnClick))
-  } else if (!emptySquares().length) {
-    console.log('Draw')
-    moveCount = moveStates.length -1
-  }
+  console.log('Move States', moveStates)
+}
 
-  if (emptySquares().length && isAgaintAi())
+function turnClick(e) {
+  const rowId = e.target.parentNode.id
+  const cellId = e.target.id
+  writeCell(nextPlayer, rowId, cellId)  
+  checkGameOver(nextPlayer)
+  nextTurn()
+}
+
+function nextTurn() {
+  if (emptySquares().length && isAgaintAi()) 
     bestMove()
   else 
     nextPlayer = (nextPlayer === 'X') ? 'O' : 'X'
@@ -89,21 +80,29 @@ function bestMove() {
       }
     }
   }
-  origBoard[move.i][move.j] = getAiPlayer()
-  rows[move.i].children[move.j].textContent = getAiPlayer()
+
+  writeCell(getAiPlayer(), move.i, move.j)
   rows[move.i].children[move.j].removeEventListener('click', turnClick)
+  checkGameOver(getAiPlayer())
+}
 
-  let moveSave = origBoard.map(arr => arr.slice())
-  moveStates.push(moveSave)
-  console.log('AI Move States', moveStates)
+function writeCell(player, rowId, cellId) {
+  origBoard[rowId][cellId] = player
+  rows[rowId].children[cellId].textContent = player
+  saveMoveState()
+}
 
+function checkGameOver(player) {
   let boardFlat = origBoard.flat()
-
-  let gameWon = checkWinner(boardFlat, getAiPlayer())
+  let gameWon = checkWinner(boardFlat, player)
   if (gameWon) {
-    console.log(`CPU ${getAiPlayer()} Wins`)
+    console.log(`Player ${player} Wins`)
     moveCount = moveStates.length -1
     cells.forEach(cell => cell.removeEventListener('click', turnClick))
+  }
+  else if (!emptySquares().length) {
+    console.log('Draw')
+    moveCount = moveStates.length -1
   }
 }
 
