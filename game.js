@@ -14,23 +14,22 @@ const winCombos = [
   [6, 4, 2]
 ]
 
-let origBoard = [
-  ['','',''],
-  ['','',''],
-  ['','','']
-]
-
+let origBoard
 let moveCount
-let moveStates = []
-let huPlayer = 'O'
-const aiPlayer = 'X'
+let moveStates
+let huPlayer
+let aiPlayer
+
 const rows = document.querySelectorAll('tr')
 const cells = document.querySelectorAll('td')
 const prevBtn = document.getElementById('prevBtn')
 const nextBtn = document.getElementById('nextBtn')
-
 const startBtn = document.getElementById('startBtn')
-startBtn.addEventListener('click', playerChoose)
+
+startBtn.addEventListener('click', startGame)
+
+prevBtn.addEventListener('click', updateState)
+nextBtn.addEventListener('click', updateState)
 
 function playerChoose() {
   const playerChoice = document.querySelectorAll('input[name="player"]')
@@ -40,24 +39,28 @@ function playerChoose() {
       break // or return(out of function)
     }
   }
+  aiPlayer = huPlayer === 'X' ? 'O' : 'X'
 }
 
-startGame()
-
 function startGame() {
-  document.querySelector('.endgame').style.display = 'none'
+  playerChoose()
   cells.forEach(cell => {
     cell.textContent = ''
-    cell.style.removeProperty('background')
     cell.addEventListener('click', turnClick, { once: true })
   })
+  moveStates = []
+  origBoard = [
+    ['','',''],
+    ['','',''],
+    ['','','']
+  ]
 }
 
 function turnClick(e) {
   let rowId = e.target.parentNode.id
   let cellId = e.target.id
   turn(rowId, cellId, huPlayer)
-  // huPlayer = huPlayer === 'X' ? 'O' : 'X'
+  // huPlayer = huPlayer === 'X' ? aiPlayer : huPlayer
 }
 
 function turn(rowId, cellId, player) {
@@ -77,10 +80,13 @@ function turn(rowId, cellId, player) {
   let gameWon = checkWin(boardFlat, player)
 
   if (gameWon) {
-    console.log(player + ' Wins')
+    console.log('Player Wins')
     moveCount = moveStates.length -1
-  } else if (!emptySquares().length) 
+    cells.forEach(cell => cell.removeEventListener('click', turnClick))
+  } else if (!emptySquares().length) {
     console.log('Draw')
+    moveCount = moveStates.length -1
+  }
 }
 
 function checkWin(board, player) {  
@@ -106,7 +112,7 @@ function emptySquares() {
 }
 
 function updateState(e) {
-  if (e.target.id === 'prevBtn')
+  if (e.target.id === 'prevBtn' && moveCount)
     moveCount -= 1
   else
     moveCount += 1
@@ -127,39 +133,40 @@ function bestMove() {
     for (let j = 0; j < rows.length; j++) {
       if (origBoard[i][j] === '') {
         origBoard[i][j] = aiPlayer
-        console.log(origBoard)
         let score = minimax(origBoard, 0, false)
         origBoard[i][j] = ''
-        console.log(score)
         if (score > bestScore) {
           bestScore = score
           move = { i, j }
-          console.log('Hi')
         }
       }
     }
   }
   origBoard[move.i][move.j] = aiPlayer
   rows[move.i].children[move.j].textContent = aiPlayer
+  rows[move.i].children[move.j].removeEventListener('click', turnClick)
 
-  console.log(origBoard)
+  let moveSave = origBoard.map(arr => arr.slice())
+  moveStates.push(moveSave)
+  console.log('Move States', moveStates)
 
-  // let moveSave = origBoard.map(arr => arr.slice())
-  // moveStates.push(moveSave)
-  // console.log('Move States', moveStates)
+  let boardFlat = origBoard.flat()
+
+  let gameWon = checkWin(boardFlat, aiPlayer)
+  if (gameWon) {
+    console.log('CPU Wins')
+    moveCount = moveStates.length -1
+    cells.forEach(cell => cell.removeEventListener('click', turnClick))
+  }
 }
 
 function minimax(board, depth, isMaximizing) {
   let boardFlat = origBoard.flat()
   let result = checkWin(boardFlat, aiPlayer)
   
-  if (checkWin(boardFlat, huPlayer)) {
-    return -10
-  } else if (checkWin(boardFlat, aiPlayer)) {
-    return 10
-  } else if (emptySquares().length === 0) {
-    return 0
-  }
+  if (checkWin(boardFlat, huPlayer)) return -10
+  else if (checkWin(boardFlat, aiPlayer)) return 10
+  else if (emptySquares().length === 0) return 0
 
   if (isMaximizing) {
     let bestScore = -Infinity
