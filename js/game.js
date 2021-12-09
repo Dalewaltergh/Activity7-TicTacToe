@@ -28,6 +28,7 @@ export function startGame() {
 } 
 
 function initGame() {
+  newGameBtn.style.display = 'initial'
   showTurn(false, getPlayer())
   player = getPlayer()
   enableClicks()

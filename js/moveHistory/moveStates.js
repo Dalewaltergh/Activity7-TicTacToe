@@ -15,10 +15,19 @@ export function saveMoveState(board) {
 }
 
 export function updateState(e) {
-  if (e.target.id === 'prevBtn' && moveCount)
+  if (e.target.id === 'prevBtn') {
     moveCount -= 1
-  else if (e.target.id === 'nextBtn' && moveCount < moveStateSize())
+    document.getElementById('nextBtn').disabled = false
+    if (moveCount === 0) 
+      e.target.disabled = true
+  }
+
+  if (e.target.id === 'nextBtn') {
     moveCount += 1
+    document.getElementById('prevBtn').disabled = false
+    if (moveCount === moveStateSize()) 
+      e.target.disabled = true
+  }
 
   let curState = moveStates[moveCount]
 

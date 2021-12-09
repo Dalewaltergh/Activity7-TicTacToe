@@ -4,8 +4,8 @@ import { playSound } from '../sound.js'
 import { rows } from '../domElements.js'
 import { checkBoard } from '../gameOver.js'
 import { writeCell } from '../playerWrite.js'
-import { getAiPlayer } from '../menu/choosePlayer.js'
 import { showTurn } from '../showTurn.js'
+import { getAiPlayer, getPlayer } from '../menu/choosePlayer.js'
 
 export function bestMove(board) {
   let bestScore = -Infinity
@@ -23,9 +23,9 @@ export function bestMove(board) {
       }
     }
   }
-  showTurn(false, getAiPlayer())
   writeCell(board, getAiPlayer(), move.i, move.j)
   rows[move.i].children[move.j].removeEventListener('click', turnClick)
   checkBoard(board, getAiPlayer())
+  showTurn(false, getPlayer())
   playSound()
 }

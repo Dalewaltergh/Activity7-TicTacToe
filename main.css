@@ -5,6 +5,12 @@ body {
 	font-weight: 300;
 }
 
+h2 {
+	text-align: center; 
+	margin-top: 50px; 
+	font-size: 2em;
+}
+
 td {
 	border: 5px solid white;
 	height: 100px;
@@ -118,6 +124,7 @@ p {
 }
 
 #startBtn {
+	margin-left: -25px;
 	padding: 20px;
 	border: 2px solid #f7f7f7;
 	text-align: center;
@@ -128,7 +135,50 @@ p {
 	background: transparent;
 	color: white;
 }
-#startBtn:hover {
+
+footer {
+	display: flex;
+	position: fixed;
+	bottom: 0;
+	left: 36.5%;
+	margin-bottom: 20px;
+}
+
+footer button {
+	padding: 10px 20px;
+	border: 2px solid #f7f7f7;
+	text-align: center;
+	text-transform: uppercase;
+	position: relative;
+	overflow: hidden;
+	transition: 0.3s;
+	background: transparent;
+	color: white;
+	margin-left: 30px;
+	cursor: pointer;
+}
+
+footer button:disabled {
+	opacity: .25;
+	border-radius: 0;
+}
+
+#newGame {
+	position: absolute;
+	right: 46%;
+	bottom: 10%;
+	padding: 10px 20px;
+	border: 2px solid #f7f7f7;
+	text-align: center;
+	text-transform: uppercase;
+	overflow: hidden;
+	transition: 0.3s;
+	background: transparent;
+	color: white;
+	display: none;
+}
+
+button:hover {
 	cursor: pointer;
 	border-radius: 30px;
 }

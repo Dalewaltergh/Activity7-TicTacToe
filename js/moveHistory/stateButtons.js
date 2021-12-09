@@ -3,17 +3,18 @@ import { showWinner, turnDisplay } from '../domElements.js'
 import { resetMoveState, updateState } from './moveStates.js'
 
 export function showStateButtons() {
-  createStateButton('prev', updateState)
-  createStateButton('next', updateState)
-  createStateButton('reset', removeStateButtons)
+  createStateButton('prev', updateState, false)
+  createStateButton('reset', removeStateButtons, false)
+  createStateButton('next', updateState, true)
 }
 
-function createStateButton(name, callback) {
+function createStateButton(name, callback, disabled) {
   const btn = document.createElement('button')
   btn.id = `${name}Btn`
   btn.textContent = name
   btn.addEventListener('click', callback)
-  document.body.append(btn)
+  document.querySelector('footer').append(btn)
+  btn.disabled = disabled
 }
 
 function removeStateButtons(e) {
