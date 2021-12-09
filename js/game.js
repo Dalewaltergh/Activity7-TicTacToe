@@ -1,47 +1,66 @@
 import { playSound } from './sound.js'
+import { showTurn } from './showTurn.js'
 import { minimax } from './ai/minimax.js'
 import { checkBoard } from './gameOver.js'
 import { bestMove } from './ai/bestMove.js'
 import { writeCell } from './playerWrite.js'
 import { checkWinner } from './checkWinner.js'
+import { rows, cells } from './domElements.js'
 import { emptySquares } from './emptySquares.js'
-import { rows, cells } from './utils/domElements.js'
-import { choosePlayer, getHuPlayer} from './choosePlayer.js'
-import { chooseGameType, isAgaintAi } from './chooseType.js'
+import { newGameBtn, modal } from './domElements.js'
+import { getNextPlayer, nextTurn } from './nextTurn.js'
+import { turnDisplay, showWinner } from './domElements.js'
+import { chooseGameType, isAgaintAi } from './menu/chooseType.js'
+import { choosePlayer, getPlayer } from './menu/choosePlayer.js'
 
 let origBoard
-let nextPlayer
+let player
 
-startBtn.addEventListener('click', newGame)
-export function newGame() {
+startBtn.addEventListener('click', startGame)
+newGameBtn.addEventListener('click', newGame)
+
+export function startGame() {
   choosePlayer()
   chooseGameType()
-  nextPlayer = getHuPlayer()
-  cells.forEach(cell => {
-    cell.textContent = ''
-    cell.addEventListener('click', turnClick, { once: true })
+  
+  if (isAgaintAi() === undefined || getPlayer() === undefined) return
+  initGame()
+} 
+
+function initGame() {
+  showTurn(false, getPlayer())
+  player = getPlayer()
+  enableClicks()
+  resetBoard()
+  modal.style.display = 'none'
+  showWinner.display = 'none'
+}
+
+function newGame() {
+  location.reload()
+}
+
+const enableClicks = () =>   
+  cells.forEach(c => {
+    c.textContent = ''
+    c.addEventListener('click', turnClick, { once: true })
   })
+
+export const resetBoard = () => 
   origBoard = [
     ['','',''],
     ['','',''],
     ['','','']
   ]
-}
 
 export function turnClick(e) {
   const rowId = e.target.parentNode.id
   const cellId = e.target.id
-
-  writeCell(origBoard, nextPlayer, rowId, cellId)  
-  nextTurn()
+  writeCell(origBoard, player, rowId, cellId)  
+  checkBoard(origBoard, player)
+  nextTurn(origBoard, player)
   playSound()
+  if (!isAgaintAi())
+    player = getNextPlayer()
 }
 
-function nextTurn() {
-  if (emptySquares(origBoard).length && isAgaintAi()) 
-    setTimeout(() => bestMove(origBoard), 500)
-  else 
-    nextPlayer = (nextPlayer === 'X') ? 'O' : 'X'
-  
-  checkBoard(origBoard, nextPlayer)
-}

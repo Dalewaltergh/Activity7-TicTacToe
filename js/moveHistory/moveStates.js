@@ -1,4 +1,4 @@
-import { rows } from '../utils/domElements.js'
+import { rows } from '../domElements.js'
 import { checkWinner } from '../checkWinner.js'
 import { emptySquares } from '../emptySquares.js'
 
@@ -10,7 +10,7 @@ const moveStateSize = () => moveStates.length-1
 export function saveMoveState(board) {
   const moveSave = board.map(arr => arr.slice())
   moveStates.push(moveSave)
-  console.log('Move States', moveStates)
+  console.log('Move History', moveStates)
   moveCount = moveStateSize()
 }
 

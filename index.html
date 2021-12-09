@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/ico" href="./img/icon.ico"/>
+  <title>Tic Tac Toe</title>
   <link rel="stylesheet" href="main.css" />
 </head>
 <body>
+<h2 id="showTurn"></h2>
+<h2 id="showWinner"></h2>
 <table>
   <tr id="0">
     <td id="0"></td>
@@ -23,21 +28,24 @@
     <td id="2"></td>
   </tr>
 </table>
+<button id="newGame">New Game</button>
+<div class="modal-container" id="modal_container">  
+  <h1>Choose Player: </h1>
+  <div style="margin-bottom: 50px;">
+    <input type="radio" id="xRadio" name="player" value="X">
+    <label for="xRadio">X</label>
+    <input type="radio" id="oRadio" name="player" value="O">
+    <label for="oRadio">O</label>  
+  </div>
+  <h1>Game Type: </h1>
+  <div style="margin-bottom: 50px;">
+    <input type="radio" id="twoPlayer" name="gameType" value="false">
+    <label for="twoPlayer">2P</label>
+    <input type="radio" id="vsComputer" name="gameType" value="true">
+    <label for="vsComputer">AI</label>  
+  </div>
+  <button id="startBtn">Start Game</button>
 
-<input type="radio" id="xRadio" name="player" value="X">
-<label for="xRadio">X</label>
-<input type="radio" id="oRadio" name="player" value="O">
-<label for="oRadio">O</label>  
-<br/>
-<input type="radio" id="twoPlayer" name="gameType" value="false">
-<label for="twoPlayer">2 Player</label>
-<input type="radio" id="vsComputer" name="gameType" value="true">
-<label for="vsComputer">VS Computer</label>  
-<br/>
-<button id="startBtn">Start</button>
-<br/>
-<!-- <button id="prevBtn">Prev</button>
-<button id="nextBtn">Next</button> -->
 <script type="module" src="js/game.js"></script>
 </body>
 </html>

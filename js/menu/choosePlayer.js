@@ -1,5 +1,4 @@
-
-import { playerChoices } from './utils/domElements.js'
+import { playerChoices } from '../domElements.js'
 
 let huPlayer
 let aiPlayer
@@ -14,6 +13,6 @@ export function choosePlayer() {
   aiPlayer = huPlayer === 'X' ? 'O' : 'X'
 }
 
-export const getHuPlayer = () => huPlayer
+export const getPlayer = () => huPlayer
 export const getAiPlayer = () => aiPlayer
 
