@@ -1,9 +1,10 @@
-import { rows } from './domElements.js'
-import { getAiPlayer } from './players.js'
 import { minimax } from './minimax.js'
-import { writeCell } from './playerWrite.js'
-import { checkGameOver } from './game.js'
-import { turnClick } from './game.js'
+import { turnClick } from '../game.js'
+import { playSound } from '../sound.js'
+import { checkBoard } from '../gameOver.js'
+import { getAiPlayer } from '../choosePlayer.js'
+import { writeCell } from '../playerWrite.js'
+import { rows } from '../utils/domElements.js'
 
 export function bestMove(board) {
   let bestScore = -Infinity
@@ -21,7 +22,9 @@ export function bestMove(board) {
       }
     }
   }
+
   writeCell(board, getAiPlayer(), move.i, move.j)
   rows[move.i].children[move.j].removeEventListener('click', turnClick)
-  checkGameOver(getAiPlayer())
+  checkBoard(board, getAiPlayer())
+  playSound()
 }

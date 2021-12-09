@@ -1,5 +1,5 @@
 
-import { playerChoices } from './domElements.js'
+import { playerChoices } from './utils/domElements.js'
 
 let huPlayer
 let aiPlayer

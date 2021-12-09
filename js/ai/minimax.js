@@ -1,6 +1,6 @@
-import { checkWinner } from './checkWinner.js'
-import { getHuPlayer, getAiPlayer } from './players.js'
-import { emptySquares } from './emptySquares.js'
+import { checkWinner } from '../checkWinner.js'
+import { getHuPlayer, getAiPlayer } from '../choosePlayer.js'
+import { emptySquares } from '../emptySquares.js'
 
 export function minimax(board, depth, isMaximizing) {
   if (checkWinner(board, getHuPlayer())) return -10
