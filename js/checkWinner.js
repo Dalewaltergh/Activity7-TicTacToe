@@ -15,7 +15,9 @@ const winCombos = [
 ]
 
 export function checkWinner(board, player) {  
-  let plays = board.reduce((a, e, i) =>
+  let boardFlat = board.flat() || [[]]
+
+  let plays = boardFlat.reduce((a, e, i) =>
     e === player ?
       a.concat(i) :
       a, []
