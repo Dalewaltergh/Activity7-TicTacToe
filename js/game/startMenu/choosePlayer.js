@@ -1,4 +1,4 @@
-import { playerChoices } from '../domElements.js'
+import { playerChoices } from '../../domVariables.js'
 
 let huPlayer, aiPlayer
 
@@ -14,4 +14,3 @@ export function choosePlayer() {
 
 export const getPlayer = () => huPlayer
 export const getAiPlayer = () => aiPlayer
-export const getNextPlayer = () => huPlayer = (huPlayer === 'X') ? 'O' : 'X'

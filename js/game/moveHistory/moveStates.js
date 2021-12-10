@@ -1,4 +1,4 @@
-import { rows } from '../domElements.js'
+import { rows } from '../../domVariables.js'
 
 let moveCount
 let moveStates = []
@@ -13,22 +13,27 @@ export function saveMoveState(board) {
 }
 
 export function updateState(e) {
+  const nextBtn = document.getElementById('nextBtn')
+  const prevBtn = document.getElementById('prevBtn')
+
   if (e.target.id === 'prevBtn') {
     moveCount -= 1
-    document.getElementById('nextBtn').disabled = false
+    nextBtn.disabled = false
     if (moveCount === 0) 
       e.target.disabled = true
   }
-
-  if (e.target.id === 'nextBtn') {
+  else if (e.target.id === 'nextBtn') {
     moveCount += 1
-    document.getElementById('prevBtn').disabled = false
+    prevBtn.disabled = false
     if (moveCount === moveStateSize()) 
       e.target.disabled = true
   }
 
-  let curState = moveStates[moveCount]
+  updateBoardState()
+}
 
+function updateBoardState() {
+  let curState = moveStates[moveCount]
   curState.forEach((rowData, rowIndex) => 
     rowData.forEach((boxData, boxIndex) => 
       rows[rowIndex].children[boxIndex].textContent = boxData
