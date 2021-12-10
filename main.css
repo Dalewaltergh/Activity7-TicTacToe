@@ -109,7 +109,12 @@ label {
   transition: 200ms all;
   cursor: pointer;
 }
-input { display: none; }
+label:hover {
+	transform: scale(1.1);
+}
+input {
+	 display: none; 
+}
 input:checked + label {
 	box-shadow: 0 0 0 -1px #FFF inset;
   color: black;
@@ -131,7 +136,7 @@ p {
 	text-transform: uppercase;
 	position: relative;
 	overflow: hidden;
-	transition: 0.3s;
+	transition: 0.3s all;
 	background: transparent;
 	color: white;
 }

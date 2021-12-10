@@ -12,27 +12,28 @@ const winCombos = [
   // Diagonal
   [0, 4, 8],
   [6, 4, 2]
+
 ]
 
 export function checkWinner(board, player) {  
-  // let boardFlat = board.flat() || [[]]
-  let boardFlat = [].concat(...board)
-
-  let plays = boardFlat.reduce((a, e, i) =>
-    e === player ?
-      a.concat(i) :
-      a, []
-  )
-  
-  let gameWon = null
-  for (let [index, win] of winCombos.entries()) {
-    if (win.every(elem => plays.indexOf(elem) > -1)) {
-      gameWon = {
-        index: index, 
-        player: player
-      }
+  const plays = getPlaysFromBoard(board, player)
+  let gameWon = false
+  for (let [index, combo] of winCombos.entries()) 
+    if (combo.every(elem => plays.indexOf(elem) > -1)) {
+      gameWon = true
       break
     }
-  }
   return gameWon
 }
+
+function getPlaysFromBoard(board, player) {
+  const boardFlat = [].concat(...board)
+  const plays = boardFlat
+    .reduce((a, e, i) =>
+      (e === player) ? a.concat(i) : a, 
+      []
+    )
+
+  return plays
+} 
+

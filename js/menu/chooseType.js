@@ -5,8 +5,9 @@ let againstAi
 export function chooseGameType() {
   for (const type of gameTypes) {
     if(type.checked) {
-      againstAi = (type.value === 'true')
-      break
+      againstAi = (type.value === 'true') 
+      // break
+      return
     }
   }
 }

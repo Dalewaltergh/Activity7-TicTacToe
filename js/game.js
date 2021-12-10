@@ -1,44 +1,29 @@
-import { playSound } from './sound.js'
-import { showTurn } from './showTurn.js'
-import { minimax } from './ai/minimax.js'
-import { checkBoard } from './gameOver.js'
-import { bestMove } from './ai/bestMove.js'
-import { writeCell } from './playerWrite.js'
-import { checkWinner } from './checkWinner.js'
-import { rows, cells } from './domElements.js'
-import { emptySquares } from './emptySquares.js'
+import { cells } from './domElements.js'
+import { resetGame } from './playerTurn.js'
 import { newGameBtn, modal } from './domElements.js'
-import { getNextPlayer, nextTurn } from './nextTurn.js'
-import { turnDisplay, showWinner } from './domElements.js'
-import { chooseGameType, isAgaintAi } from './menu/chooseType.js'
+import { showTurn, turnClick } from './playerTurn.js'
+import { resetMoveState } from './moveHistory/moveStates.js'
 import { choosePlayer, getPlayer } from './menu/choosePlayer.js'
-
-let origBoard
-let player
+import { chooseGameType, isAgaintAi } from './menu/chooseType.js'
 
 startBtn.addEventListener('click', startGame)
-newGameBtn.addEventListener('click', newGame)
+newGameBtn.addEventListener('click', () => location.reload())
 
-export function startGame() {
+function startGame() {
   choosePlayer()
   chooseGameType()
   
-  if (isAgaintAi() === undefined || getPlayer() === undefined) return
-  initGame()
+  if (isAgaintAi() !== undefined && getPlayer())
+    initGame()
 } 
 
-function initGame() {
+export function initGame() {
   newGameBtn.style.display = 'initial'
   showTurn(false, getPlayer())
-  player = getPlayer()
   enableClicks()
-  resetBoard()
+  resetGame()
   modal.style.display = 'none'
   showWinner.display = 'none'
-}
-
-function newGame() {
-  location.reload()
 }
 
 const enableClicks = () =>   
@@ -46,22 +31,3 @@ const enableClicks = () =>
     c.textContent = ''
     c.addEventListener('click', turnClick, { once: true })
   })
-
-export const resetBoard = () => 
-  origBoard = [
-    ['','',''],
-    ['','',''],
-    ['','','']
-  ]
-
-export function turnClick(e) {
-  const rowId = e.target.parentNode.id
-  const cellId = e.target.id
-  writeCell(origBoard, player, rowId, cellId)  
-  checkBoard(origBoard, player)
-  nextTurn(origBoard, player)
-  playSound()
-  if (!isAgaintAi())
-    player = getNextPlayer()
-}
-

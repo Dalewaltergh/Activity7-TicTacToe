@@ -1,7 +1,6 @@
 import { playerChoices } from '../domElements.js'
 
-let huPlayer
-let aiPlayer
+let huPlayer, aiPlayer
 
 export function choosePlayer() {
   for (const choice of playerChoices) {
@@ -10,9 +9,9 @@ export function choosePlayer() {
       break
     }
   }
-  aiPlayer = huPlayer === 'X' ? 'O' : 'X'
+  aiPlayer = (huPlayer === 'X') ? 'O' : 'X'
 }
 
 export const getPlayer = () => huPlayer
 export const getAiPlayer = () => aiPlayer
-
+export const getNextPlayer = () => huPlayer = (huPlayer === 'X') ? 'O' : 'X'

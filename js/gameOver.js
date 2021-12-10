@@ -1,4 +1,4 @@
-import { turnClick } from './game.js'
+import { turnClick } from './playerTurn.js'
 import { checkWinner } from './checkWinner.js'
 import { emptySquares } from './emptySquares.js'
 import { showStateButtons } from './moveHistory/stateButtons.js'
