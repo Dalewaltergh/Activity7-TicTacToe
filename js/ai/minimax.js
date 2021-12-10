@@ -1,11 +1,14 @@
-import { checkWinner } from '../checkWinner.js'
-import { emptySquares } from '../emptySquares.js'
+import { getMainBoard } from '../game.js'
+import { checkWin } from '../checkWin.js'
+import { getEmptyCells } from '../emptySquares.js'
 import { getPlayer, getAiPlayer } from '../menu/choosePlayer.js'
 
-export function minimax(board, depth, isMaximizing) {
-  if (checkWinner(board, getPlayer())) return -10
-  else if (checkWinner(board, getAiPlayer())) return 10
-  else if (!emptySquares(board).length) return 0
+export function minimax(depth, isMaximizing) {
+  const board = getMainBoard()
+
+  if (checkWin(getPlayer())) return -10
+  else if (checkWin(getAiPlayer())) return 10
+  else if (!getEmptyCells().length) return 0
 
   if (isMaximizing) {
     let bestScore = -Infinity
@@ -35,8 +38,4 @@ export function minimax(board, depth, isMaximizing) {
     }
     return bestScore
   }
-}
-
-function whoWon() {
-  
 }

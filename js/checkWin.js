@@ -1,3 +1,6 @@
+import { getMainBoard } from './game.js'
+import { showStateButtons } from './moveHistory/stateButtons.js'
+
 const winCombos = [
   // Horizontal
   [0, 1, 2],
@@ -15,8 +18,8 @@ const winCombos = [
 
 ]
 
-export function checkWinner(board, player) {  
-  const plays = getPlaysFromBoard(board, player)
+export function checkWin(player) {  
+  const plays = getPlaysFromBoard(player)
   let gameWon = false
   for (let [index, combo] of winCombos.entries()) 
     if (combo.every(elem => plays.indexOf(elem) > -1)) {
@@ -26,7 +29,8 @@ export function checkWinner(board, player) {
   return gameWon
 }
 
-function getPlaysFromBoard(board, player) {
+function getPlaysFromBoard(player) {
+  const board = getMainBoard()
   const boardFlat = [].concat(...board)
   const plays = boardFlat
     .reduce((a, e, i) =>

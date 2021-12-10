@@ -1,31 +1,40 @@
 import { minimax } from './minimax.js'
 import { playSound } from '../sound.js'
 import { rows } from '../domElements.js'
-import { checkBoard } from '../gameOver.js'
+import { turnClick } from '../player.js'
+import { getMainBoard } from '../game.js'
 import { writeCell } from '../writeCell.js'
-import { showTurn } from '../playerTurn.js'
-import { turnClick } from '../playerTurn.js'
-import { getAiPlayer, getPlayer } from '../menu/choosePlayer.js'
+import { checkBoard } from '../checkBoard.js'
+import { getAiPlayer } from '../menu/choosePlayer.js'
 
-export function aiMove(board) {
-  let bestScore = -Infinity
+export function aiMove() {
+  const {row, cell} = getBestMove()
+  
+  playSound()
+  writeCell(getAiPlayer(), row, cell)
+  checkBoard(getAiPlayer()) 
+}
+
+function getBestMove() {
   let move
-  for (let i = 0; i < rows.length; i++) {
-    for (let j = 0; j < rows.length; j++) {
-      if (board[i][j] === '') {
-        board[i][j] = getAiPlayer()
+  let bestScore = -Infinity
+  const board = getMainBoard()
+  
+  for (let row = 0; row < 3; row++) {
+    for (let cell = 0; cell < 3; cell++) {
+      if (board[row][cell] === '') {
+        board[row][cell] = getAiPlayer()
         const score = minimax(board, 0, false)
-        board[i][j] = ''
+        board[row][cell] = ''
+  
         if (score > bestScore) {
           bestScore = score
-          move = { i, j }
+          move = { row, cell }
         }
       }
     }
   }
-  writeCell(board, getAiPlayer(), move.i, move.j)
-  rows[move.i].children[move.j].removeEventListener('click', turnClick)
-  checkBoard(board, getAiPlayer())
-  showTurn(false, getPlayer())
-  playSound()
+  
+  rows[move.row].children[move.cell].removeEventListener('click', turnClick)
+  return move
 }

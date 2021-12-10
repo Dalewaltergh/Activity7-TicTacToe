@@ -1,7 +1,6 @@
 import { initGame } from '../game.js'
-import { resetGame } from '../playerTurn.js'
 import { updateState } from './moveStates.js'
-import { showWinner, turnDisplay } from '../domElements.js'
+import { winnerText, turnText } from '../domElements.js'
 
 export function showStateButtons() {
   createStateButton('prev', updateState, false)
@@ -19,8 +18,8 @@ function createStateButton(name, callback, disabled) {
 }
 
 function removeStateButtons(e) {
-  showWinner.style.display = 'none'
-  turnDisplay.style.display = ''
+  winnerText.style.display = 'none'
+  turnText.style.display = ''
   initGame()
   document.getElementById('prevBtn').remove()
   document.getElementById('nextBtn').remove()

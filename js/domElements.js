@@ -10,7 +10,7 @@ export const newGameBtn = document.getElementById('newGame')
 export const gameTypes = document.querySelectorAll('input[name="gameType"]')
 export const playerChoices = document.querySelectorAll('input[name="player"]')
 
-export const turnDisplay =  document.getElementById('showTurn')
-export const showWinner =  document.getElementById('showWinner')
+export const turnText =  document.getElementById('turnText')
+export const winnerText =  document.getElementById('winnerText')
 
 export const modal = document.getElementById('modal_container')

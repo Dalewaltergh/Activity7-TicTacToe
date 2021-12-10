@@ -1,6 +1,4 @@
 import { rows } from '../domElements.js'
-import { checkWinner } from '../checkWinner.js'
-import { emptySquares } from '../emptySquares.js'
 
 let moveCount
 let moveStates = []
