@@ -18,29 +18,39 @@ const winCombos = [
   [6, 4, 2]
 ]
 
-export function checkWin(player) {  
-  const inputs = getPlaysFromBoard(player)
-  if(!isAgaintAi()) console.log(`${player} Player: [${inputs}]`)
+export function gameWon(player) {  
+  const plays = getPlaysFromBoard(player)
+  
+  if(!isAgaintAi()) 
+    console.log(`${player} Plays: [${plays}]`)
 
-  let gameWon = false
-  for (let combo of winCombos) 
-    if (combo.every(num => inputs.indexOf(num) > -1)) {
-      gameWon = true
+  return getWin(plays)
+}
+
+function getWin(plays) {
+  for (let combo of winCombos) {
+    if (combo.every(num => plays.indexOf(num) > -1)) {
+      return true
       break
     }
-
-  return gameWon
+  }
 }
 
 function getPlaysFromBoard(player) {
   const boardInputs = [].concat(...getMainBoard())
   
-  const inputsToIndex = boardInputs
+  const playsToIndex = boardInputs
     .reduce((init, element, index) =>
       (element === player) ? 
         init.concat(index) : init, 
       []
     )
 
-  return inputsToIndex
+  return playsToIndex
 } 
+
+export function gameDraw() {
+  const boardBoxes = [].concat(...getMainBoard())
+  const boxesFilled = boardBoxes.filter(box => !box) 
+  return !boxesFilled.length
+}

@@ -1,4 +1,4 @@
-import { playerChoices } from '../../domVariables.js'
+import { playerChoices } from '../domVariables.js'
 
 let huPlayer, aiPlayer
 

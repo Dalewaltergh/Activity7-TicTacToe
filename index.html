@@ -5,12 +5,51 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" type="image/ico" href="./img/icon.ico"/>
-
   <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="main.css" />
-  <script type="module" src="js/game/game.js" defer></script>
+  <link rel="stylesheet" href="main.css"/>
+  <script type="module" src="js/game.js" defer></script>
 </head>
 <body>
-  <script src="js/includeHTML.js"></script>
+  <h2 id="turnText"></h2>
+  <h2 id="winnerText"></h2>
+
+  <table>
+    <tr id="0">
+      <td id="0"></td>
+      <td id="1"></td>
+      <td id="2"></td>
+    </tr>
+    <tr id="1">
+      <td id="0"></td>
+      <td id="1"></td>
+      <td id="2"></td>
+    </tr>
+    <tr id="2">
+      <td id="0"></td>
+      <td id="1"></td>
+      <td id="2"></td>
+    </tr>
+  </table>
+
+  <button id="newGame">New Game</button>  
+  <div class="modal-container" id="modalContainer">  
+    <h1>Choose Player: </h1>
+    <div id="optionDiv">
+      <input type="radio" id="xRadio" name="player" value="X">
+      <label for="xRadio">X</label>
+      <input type="radio" id="oRadio" name="player" value="O">
+      <label for="oRadio">O</label>  
+    </div>
+    
+    <h1>Choose Game Type: </h1>
+    <div id="optionDiv">
+      <input type="radio" id="twoPlayer" name="gameType" value="false">
+      <label for="twoPlayer">2P</label>
+      <input type="radio" id="vsComputer" name="gameType" value="true">
+      <label for="vsComputer">AI</label>  
+    </div>
+    <button id="startBtn">Start Game</button>
+  </div>
+  <footer></footer>
 </body>
 </html>

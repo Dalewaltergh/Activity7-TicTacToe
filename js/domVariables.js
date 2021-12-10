@@ -1,4 +1,5 @@
-// rows and cells
+// table, rows and cells
+export const table = document.querySelector('table')
 export const rows = document.querySelectorAll('tr')
 export const boxes = document.querySelectorAll('td')
 
@@ -13,4 +14,4 @@ export const playerChoices = document.querySelectorAll('input[name="player"]')
 // Other
 export const turnText =  document.getElementById('turnText')
 export const winnerText =  document.getElementById('winnerText')
-export const modal = document.getElementById('modal_container')
+export const modal = document.getElementById('modalContainer')

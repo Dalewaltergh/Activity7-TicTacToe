@@ -1,5 +1,7 @@
 body {
-	background: linear-gradient(135deg, #3b8d7a 0%, #1e5799 0%, #2dbd9b 0%, #3688ad 100%);
+	/* background: linear-gradient(90deg, #02aab0 0%, #00cdac 100%); */
+	/* background: linear-gradient(90deg, #ff9966 0%, #ff5e62 100%); */
+	background: linear-gradient(90deg, #56ab2f 0%, #a8e063 100%);
 	color: #f7f7f7;
 	font-family: "Lato", sans-serif;
 	font-weight: 300;
@@ -28,6 +30,7 @@ table {
 	left: 50%;
 	margin-left: -155px;
 	top: 25%;
+	display: none;
 }
 
 table tr:first-child td {
@@ -46,25 +49,13 @@ table tr td:last-child {
 	border-right: 0;
 }
 
-.end-game {
-	display: none;
-	width: 200px;
-	background: rgba(205, 133, 63 ,0.8);
-	position: absolute;
-	left: 50%;
-	margin-left: -100px;
-	padding-top: 50px;
-	padding-bottom: 50px;
-	text-align: center;
-	border-radius: 5px;
-	color: white;
-	font-size: 2em;
+#optionDiv {
+	margin-bottom: 50px;
 }
-
 
 .modal-container {
 	position: fixed;
-	background-color: rgba(0, 0, 0, 0.8);
+	background-color: rgba(0, 0, 0, 0.5);
 	align-items: center;
 	justify-content: center;
     display: flex;

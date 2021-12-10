@@ -1,9 +1,10 @@
 import { playSound } from './sound.js'
 import { aiMove } from './ai/aiMove.js'
-import { turnText } from '../domVariables.js'
+import { writeBox } from './gameBoard.js'
+import { gameCheck } from './gameCheck.js'
+import { turnText } from './domVariables.js'
+import { gameDraw, gameWon } from './gameResult.js'
 import { isAgaintAi } from './startMenu/chooseType.js'
-import { gameCheck, isGameOver } from './gameCheck.js'
-import { isBoardFull, writeBox } from './gameBoard.js'
 import { getAiPlayer, getPlayer } from './startMenu/choosePlayer.js'
 
 let player
@@ -17,23 +18,23 @@ export function turnClick(e) {
   gameCheck(player)
   nextTurn()
   playSound() 
+  console.log(getAiPlayer(), 'turn')
 }
 
 function nextTurn() {
-  if (isBoardFull() && isGameOver()) return
-
+  if (gameDraw() || gameWon(player)) return
+  
   if (isAgaintAi()) {
-    showTurnActive(true, getAiPlayer())  
+    showTurnActive(true, getAiPlayer())
     setTimeout(aiMove, 500)
-    showTurnActive(true, player)
   }
   else {
     player = (player === 'X') ? 'O' : 'X'
-    showTurnActive(true, player)
+    showTurnActive(true)
   } 
 }
 
-export function showTurnActive(isActive, playerTurn) {
+export function showTurnActive(isActive, playerTurn = player) {
   if (isActive)
     turnText.textContent = `Player ${playerTurn}'s Turn`
   else 

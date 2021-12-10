@@ -1,4 +1,4 @@
-import { rows } from '../../domVariables.js'
+import { rows } from '../domVariables.js'
 
 let moveCount
 let moveStates = []
@@ -12,7 +12,7 @@ export function saveMoveState(board) {
   moveCount = moveStateSize()
 }
 
-export function updateState(e) {
+export function changeState(e) {
   const nextBtn = document.getElementById('nextBtn')
   const prevBtn = document.getElementById('prevBtn')
 
@@ -29,10 +29,10 @@ export function updateState(e) {
       e.target.disabled = true
   }
 
-  updateBoardState()
+  updateBoardBoxes()
 }
 
-function updateBoardState() {
+function updateBoardBoxes() {
   let curState = moveStates[moveCount]
   curState.forEach((rowData, rowIndex) => 
     rowData.forEach((boxData, boxIndex) => 

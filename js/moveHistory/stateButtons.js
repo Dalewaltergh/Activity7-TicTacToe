@@ -1,11 +1,11 @@
-import { updateState } from './moveStates.js'
+import { changeState } from './moveStates.js'
 import { initGameBoard } from '../gameBoard.js'
-import { winnerText, turnText } from '../../domVariables.js'
+import { winnerText, turnText } from '../domVariables.js'
 
 export function showStateButtons() {
-  createStateButton('prev', updateState, false)
+  createStateButton('prev', changeState, false)
   createStateButton('reset', removeStateButtons, false)
-  createStateButton('next', updateState, true)
+  createStateButton('next', changeState, true)
 }
 
 function createStateButton(name, callback, disabled) {

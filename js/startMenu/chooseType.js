@@ -1,4 +1,4 @@
-import { gameTypes } from '../../domVariables.js'
+import { gameTypes } from '../domVariables.js'
 
 let againstAi
 

@@ -1,13 +1,13 @@
-import { checkWin } from '../checkWin.js'
-import { getMainBoard, isBoardFull } from '../gameBoard.js'
+import { getMainBoard } from '../gameBoard.js'
+import { gameDraw, gameWon } from '../gameResult.js'
 import { getPlayer, getAiPlayer } from '../startMenu/choosePlayer.js'
 
 export function minimax(depth, isMaximizing) {
   const board = getMainBoard()
 
-  if (checkWin(getPlayer())) return -10
-  else if (checkWin(getAiPlayer())) return 10
-  else if (isBoardFull()) return 0
+  if (gameWon(getPlayer())) return -10
+  else if (gameWon(getAiPlayer())) return 10
+  else if (gameDraw()) return 0
 
   if (isMaximizing) {
     let bestScore = -Infinity
@@ -22,8 +22,7 @@ export function minimax(depth, isMaximizing) {
       }
     }
     return bestScore
-  } 
-  else {
+  } else {
     let bestScore = Infinity
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -38,4 +37,3 @@ export function minimax(depth, isMaximizing) {
     return bestScore
   }
 }
-

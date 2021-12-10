@@ -1,0 +1,11 @@
+* Flattening Multidimentional Array *
+https://www.jstips.co/en/javascript/flattening-multidimensional-arrays-in-javascript/
+
+* Falsy Values *
+https://miro.medium.com/max/600/1*fYDCaOWdYvuzqBYl_r8XEQ.png
+
+* Array (Map, Filter, Reduce)*
+https://res.cloudinary.com/practicaldev/image/fetch/s--YtWZoX0Y--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/mgcuihl4bicusutctlow.png
+
+* Array (Every, Some)* 
+https://pbs.twimg.com/media/EyjeB79WQAIWu_Y?format=jpg&name=large

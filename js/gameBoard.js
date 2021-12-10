@@ -1,5 +1,5 @@
 import { turnClick } from './player.js'
-import * as dom from '../domVariables.js'
+import * as dom from './domVariables.js'
 import { getPlayer } from './startMenu/choosePlayer.js'
 import { initPlayer, showTurnActive } from './player.js'
 import { saveMoveState } from './moveHistory/moveStates.js'
@@ -20,13 +20,9 @@ export function initGameBoard() {
   enableClicks()
   resetMoveState()
   showTurnActive(true, getPlayer())
-
-  dom.winnerText.display = 'none'
-  dom.modal.style.display = 'none'
-  dom.newGameBtn.style.display = 'initial'
-  dom.newGameBtn.addEventListener('click', () => location.reload())
+  domInit()
 }
- 
+
 const enableClicks = () =>   
   dom.boxes.forEach(box => {
     box.textContent = ''
@@ -41,8 +37,10 @@ export function writeBox(player, rowId, boxId) {
   saveMoveState(mainBoard)
 }
 
-export function isBoardFull() {
-  const boardInputs = [].concat(...mainBoard)
-  const boxesFilled = boardInputs.filter(i => !i)
-  return !boxesFilled.length
+function domInit() {
+  dom.winnerText.display = 'none'
+  dom.modal.style.display = 'none'
+  dom.newGameBtn.style.display = 'initial'
+  dom.table.style.display = 'initial'
+  dom.newGameBtn.addEventListener('click', () => location.reload())
 }
