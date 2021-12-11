@@ -3,10 +3,10 @@ import * as dom from './domVariables.js'
 import { createBoard } from './moveHistory/createBoard.js'
 import { getMoveStates } from './moveHistory/moveStates.js'
 import { showStateButtons } from './moveHistory/stateButtons.js'
-import { gameDraw, gameWon, getWinningCombo } from './gameResult.js'
+import { gameDraw, isGameWon, getWinningCombo } from './gameResult.js'
 
 export function gameCheck(player) {
-  if (!(gameWon(player) || gameDraw())) return
+  if (!(isGameWon(player) || gameDraw())) return
   showStateButtons()
   displayCombo(player)
   displayResult(player)
@@ -18,19 +18,19 @@ function displayResult(player) {
   dom.winnerText.style.display = ''
   
   dom.winnerText.textContent =
-  gameWon(player) ?
-  `Player ${player} Wins` :
-  `It's a Tie!`
+  isGameWon(player) ?
+    `Player ${player} Wins` :
+    `It's a Tie!`
 }
 
 function displayBoardHistory() {
-  getMoveStates().forEach(board => createBoard(board))
   dom.historyBtn.style.display = 'initial'
+  getMoveStates().forEach(board => createBoard(board))
   dom.boxes.forEach(box => box.removeEventListener('click', turnClick))
 }
 
 function displayCombo(player) {
-  if (gameWon(player)) {
+  if (isGameWon(player)) {
     getWinningCombo().forEach(w => {
       dom.boxes[w].style.background = 'rgba(0, 0, 0, .15)'
       dom.boxes[w].style.color = 'white'

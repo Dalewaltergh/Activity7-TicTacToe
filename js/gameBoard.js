@@ -13,13 +13,19 @@ export function initGameBoard() {
     ['','',''],
     ['','',''],
     ['','',''] 
-  ]
+  ] 
 
   domInit()
   initPlayer()
   clearBoxes()
   resetMoveState()
   showTurnActive(true, getPlayer()) 
+}
+
+export function markBox(player, rowId, boxId) {
+  mainBoard[rowId][boxId] = player
+  dom.rows[rowId].children[boxId].textContent = player
+  saveMoveState(mainBoard)
 }
 
 function clearBoxes() {
@@ -31,17 +37,11 @@ function clearBoxes() {
     })
 }
 
-export function markBox(player, rowId, boxId) {
-  mainBoard[rowId][boxId] = player
-  dom.rows[rowId].children[boxId].textContent = player
-  saveMoveState(mainBoard)
-}
-
 function domInit() {
-  dom.historyBtn.style.display = 'none'
   dom.modal.style.display = 'none'
-  dom.newGameBtn.style.display = 'initial'
   dom.table.style.display = 'initial'
+  dom.historyBtn.style.display = 'none'
+  dom.newGameBtn.style.display = 'initial'
   dom.newGameBtn.addEventListener('click', () => location.reload())
   for (let i = 0; i <= moveStateSize(); i++) {
     let board = dom.historyModal.lastChild

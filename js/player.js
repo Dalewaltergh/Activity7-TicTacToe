@@ -1,12 +1,13 @@
 import { aiMove } from './ai/aiMove.js'
 import { markBox } from './gameBoard.js'
-import { gameCheck } from './gameCheck.js'
+import { gameCheck } from './gameOver.js'
 import { turnText } from './domVariables.js'
-import { gameDraw, gameWon } from './gameResult.js'
-import { isAgaintAi } from './startMenu/chooseType.js'
+import { gameDraw, isGameWon } from './gameResult.js'
+import { isAgaintAi } from './startMenu/chooseMode.js'
 import { getAiPlayer, getPlayer } from './startMenu/choosePlayer.js'
 
 let player
+
 export const initPlayer = () => player = getPlayer()
 
 export function turnClick(e) {
@@ -18,8 +19,15 @@ export function turnClick(e) {
   nextTurn()
 }
 
+export function showTurnActive(isActive, playerTurn = player) {
+  if (isActive)
+    turnText.textContent = `Player ${playerTurn}'s Turn`
+  else 
+    turnText.style.display = 'none'
+}
+
 function nextTurn() {
-  if (gameDraw() || gameWon(player)) return
+  if (gameDraw() || isGameWon(player)) return
   
   if (isAgaintAi()) {
     showTurnActive(true, getAiPlayer())
@@ -29,11 +37,4 @@ function nextTurn() {
     player = (player === 'X') ? 'O' : 'X'
     showTurnActive(true)
   } 
-}
-
-export function showTurnActive(isActive, playerTurn = player) {
-  if (isActive)
-    turnText.textContent = `Player ${playerTurn}'s Turn`
-  else 
-    turnText.style.display = 'none'
 }

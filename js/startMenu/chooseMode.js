@@ -2,7 +2,7 @@ import { gameTypes } from '../domVariables.js'
 
 let againstAi
 
-export function chooseGameType() {
+export function chooseGameMode() {
   for (const type of gameTypes) {
     if(type.checked) {
       againstAi = (type.value === 'true') 

@@ -1,12 +1,12 @@
 import { getMainBoard } from '../gameBoard.js'
-import { gameDraw, gameWon } from '../gameResult.js'
+import { gameDraw, isGameWon } from '../gameResult.js'
 import { getPlayer, getAiPlayer } from '../startMenu/choosePlayer.js'
 
 export function minimax(alpha, beta, isMaximizing) {
   const board = getMainBoard()
 
-  if (gameWon(getPlayer())) return -10
-  else if (gameWon(getAiPlayer())) return 10
+  if (isGameWon(getPlayer())) return -10
+  else if (isGameWon(getAiPlayer())) return 10
   else if (gameDraw()) return 0
 
   if (isMaximizing) {

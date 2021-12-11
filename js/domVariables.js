@@ -12,7 +12,7 @@ export const historyBtn = document.getElementById('historyBtn')
 export const gameTypes = document.querySelectorAll('input[name="gameType"]')
 export const playerChoices = document.querySelectorAll('input[name="player"]')
 
-// Other
+// other
 export const turnText =  document.getElementById('turnText')
 export const modal = document.getElementById('modalContainer')
 export const winnerText =  document.getElementById('winnerText')

@@ -1,5 +1,5 @@
 import { getMainBoard } from './gameBoard.js'
-import { isAgaintAi } from './startMenu/chooseType.js'
+import { isAgaintAi } from './startMenu/chooseMode.js'
 
 let winningCombo
 const winCombos = [
@@ -18,21 +18,19 @@ const winCombos = [
   [6, 4, 2]
 ]
 
-export function gameWon(player) {  
+export function isGameWon(player) {  
   const plays = getPlaysFromBoard(player)
+  let gameWon = false
   
-  if(!isAgaintAi()) 
-    console.log(`${player} Plays: [${plays}]`)
-  
-  return getWin(plays)
-}
-
-function getWin(plays) {
   for (let combo of winCombos) {
     winningCombo = combo
-    if (combo.every(num => plays.indexOf(num) > -1))
-      return true
+    if (combo.every(num => plays.indexOf(num) > -1)) {
+      gameWon = true
+      break
+    }
   }
+
+  return gameWon
 }
 
 function getPlaysFromBoard(player) {
@@ -40,11 +38,9 @@ function getPlaysFromBoard(player) {
 
   const playsToIndex = boardInputs
     .reduce((init, element, index) =>
-      (element === player) ?
-        init.concat(index) : init,
+      (element === player) ? init.concat(index) : init,
       []
     )
-
   return playsToIndex
 } 
 
@@ -52,6 +48,6 @@ export const getWinningCombo = () => winningCombo
 
 export function gameDraw() {
   const boardBoxes = [].concat(...getMainBoard())
-  const boxesFilled = boardBoxes.filter(box => !box) 
-  return !boxesFilled.length
+  const emptyBoxes = boardBoxes.filter(box => !box) 
+  return !emptyBoxes.length
 }

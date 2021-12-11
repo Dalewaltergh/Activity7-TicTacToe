@@ -10,7 +10,7 @@ export function choosePlayer() {
     }
   }
   aiPlayer = (huPlayer === 'X') ? 'O' : 'X'
-}
+} 
 
 export const getPlayer = () => huPlayer
 export const getAiPlayer = () => aiPlayer
