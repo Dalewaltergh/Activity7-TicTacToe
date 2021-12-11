@@ -3,13 +3,13 @@ import { rows } from '../domVariables.js'
 let moveCount
 let moveStates = []
 
-const moveStateSize = () => moveStates.length-1
+export const moveStateSize = () => moveStates.length - 1
 
 export function saveMoveState(board) {
   const moveSave = board.map(arr => arr.slice())
   moveStates.push(moveSave)
-  console.log('Move History', moveStates)
   moveCount = moveStateSize()
+  console.log('Move History', moveStates)
 }
 
 export function changeState(e) {
@@ -42,3 +42,4 @@ function updateBoardBoxes() {
 }
 
 export const resetMoveState = () => moveStates = []
+export const getMoveStates = () => moveStates

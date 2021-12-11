@@ -1,6 +1,6 @@
 import { playSound } from './sound.js'
 import { aiMove } from './ai/aiMove.js'
-import { writeBox } from './gameBoard.js'
+import { markBox } from './gameBoard.js'
 import { gameCheck } from './gameCheck.js'
 import { turnText } from './domVariables.js'
 import { gameDraw, gameWon } from './gameResult.js'
@@ -14,11 +14,10 @@ export function turnClick(e) {
   const rowId = e.target.parentNode.id
   const boxId = e.target.id
 
-  writeBox(player, rowId, boxId)  
+  markBox(player, rowId, boxId)  
   gameCheck(player)
   nextTurn()
   playSound() 
-  console.log(getAiPlayer(), 'turn')
 }
 
 function nextTurn() {

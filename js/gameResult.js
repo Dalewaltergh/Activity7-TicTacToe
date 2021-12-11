@@ -1,13 +1,13 @@
 import { getMainBoard } from './gameBoard.js'
 import { isAgaintAi } from './startMenu/chooseType.js'
-import { showStateButtons } from './moveHistory/stateButtons.js'
 
+let winningCombo
 const winCombos = [
   // Horizontal
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
-
+  
   // Vertical
   [0, 3, 6],
   [1, 4, 7],
@@ -23,31 +23,32 @@ export function gameWon(player) {
   
   if(!isAgaintAi()) 
     console.log(`${player} Plays: [${plays}]`)
-
+  
   return getWin(plays)
 }
 
 function getWin(plays) {
   for (let combo of winCombos) {
-    if (combo.every(num => plays.indexOf(num) > -1)) {
+    winningCombo = combo
+    if (combo.every(num => plays.indexOf(num) > -1))
       return true
-      break
-    }
   }
 }
 
 function getPlaysFromBoard(player) {
   const boardInputs = [].concat(...getMainBoard())
-  
+
   const playsToIndex = boardInputs
     .reduce((init, element, index) =>
-      (element === player) ? 
-        init.concat(index) : init, 
+      (element === player) ?
+        init.concat(index) : init,
       []
     )
 
   return playsToIndex
 } 
+
+export const getWinningCombo = () => winningCombo
 
 export function gameDraw() {
   const boardBoxes = [].concat(...getMainBoard())

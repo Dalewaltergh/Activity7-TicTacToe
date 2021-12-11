@@ -2,7 +2,7 @@ import { getMainBoard } from '../gameBoard.js'
 import { gameDraw, gameWon } from '../gameResult.js'
 import { getPlayer, getAiPlayer } from '../startMenu/choosePlayer.js'
 
-export function minimax(depth, isMaximizing) {
+export function minimax(alpha, beta, isMaximizing) {
   const board = getMainBoard()
 
   if (gameWon(getPlayer())) return -10
@@ -11,29 +11,33 @@ export function minimax(depth, isMaximizing) {
 
   if (isMaximizing) {
     let bestScore = -Infinity
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
+    for (let i = 0; i < 3; i++) 
+      for (let j = 0; j < 3; j++)
         if (board[i][j] === '') {
-          board[i][j] = getAiPlayer()
-          let score = minimax(board, depth + 1, false)
-          board[i][j] = ''
-          bestScore = Math.max(score, bestScore)
-        }
+        board[i][j] = getAiPlayer()
+        let score = minimax(alpha, beta, false)
+        board[i][j] = ''
+        bestScore = Math.max(score, bestScore)
+        alpha = Math.max(alpha, score)
+        if (beta <= alpha)
+          break
       }
-    }
     return bestScore
-  } else {
+  }
+
+  else {
     let bestScore = Infinity
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
+    for (let i = 0; i < 3; i++)
+      for (let j = 0; j < 3; j++)
         if (board[i][j] === '') {
           board[i][j] = getPlayer()
-          let score = minimax(board, depth + 1, true)
+          let score = minimax(alpha, beta, true)
           board[i][j] = ''
           bestScore = Math.min(score, bestScore)
-        }
+          beta = Math.min(beta, score)
+          if (beta <= alpha)
+            break
       }
-    }
     return bestScore
   }
 }
