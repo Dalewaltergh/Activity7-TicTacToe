@@ -1,5 +1,4 @@
 import { minimax } from './minimax.js'
-import { playSound } from '../sound.js'
 import { rows } from '../domVariables.js'
 import { gameCheck } from '../gameCheck.js'
 import { getMainBoard, markBox } from '../gameBoard.js'
@@ -9,7 +8,6 @@ import { getAiPlayer } from '../startMenu/choosePlayer.js'
 export function aiMove() {
   const {row, box} = initialMove()
   
-  playSound()
   markBox(getAiPlayer(), row, box)
   gameCheck(getAiPlayer()) 
   showTurnActive(true)

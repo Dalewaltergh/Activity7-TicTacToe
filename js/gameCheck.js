@@ -1,4 +1,3 @@
-import { playSound } from './sound.js'
 import { turnClick } from './player.js'
 import * as dom from './domVariables.js'
 import { createBoard } from './moveHistory/createBoard.js'
@@ -12,7 +11,6 @@ export function gameCheck(player) {
   displayCombo(player)
   displayResult(player)
   displayBoardHistory()
-  playSound('gameOver')
 }
 
 function displayResult(player) {

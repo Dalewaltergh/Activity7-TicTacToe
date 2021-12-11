@@ -1,4 +1,3 @@
-import { playSound } from './sound.js'
 import { aiMove } from './ai/aiMove.js'
 import { markBox } from './gameBoard.js'
 import { gameCheck } from './gameCheck.js'
@@ -17,7 +16,6 @@ export function turnClick(e) {
   markBox(player, rowId, boxId)  
   gameCheck(player)
   nextTurn()
-  playSound() 
 }
 
 function nextTurn() {
